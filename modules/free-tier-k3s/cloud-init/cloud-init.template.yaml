@@ -1,0 +1,12 @@
+#cloud-config
+
+write_files:
+  - path: "/root/bootstrap.sh"
+    permissions: "0700"
+    encoding: "gzip+base64"
+    content: |
+      ${bootstrap_sh_content}
+runcmd:
+  - echo "Running configuration script..."
+  - bash /root/bootstrap.sh
+  - rm /root/bootstrap.sh
