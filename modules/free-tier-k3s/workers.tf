@@ -128,7 +128,7 @@ resource "oci_core_instance_pool" "worker" {
   state = "RUNNING"
 
   dynamic "placement_configurations" {
-    for_each = data.template_file.ad_names.*.rendered
+    for_each = data.template_file.ad_worker_names[*].template
     content {
       availability_domain = placement_configurations.value
       primary_subnet_id   = oci_core_subnet.public_subnet.id

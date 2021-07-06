@@ -3,7 +3,7 @@ resource "random_password" "sqlpassword" {
 }
 
 resource "oci_core_instance" "externaldb" {
-  availability_domain = var.freetier_ad_list[0]
+  availability_domain = element(local.server_ad_names, (var.freetier_server_ad_list - 1))
   compartment_id      = var.compartment_id
   shape               = "VM.Standard.E2.1.Micro"
 

@@ -1,5 +1,6 @@
 output "sqlpassword" {
   value = module.free-tier-k3s.sqlpassword
+
 }
 
 output "k3s-api-ip" {
