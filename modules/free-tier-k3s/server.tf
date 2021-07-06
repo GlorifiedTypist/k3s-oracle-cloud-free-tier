@@ -44,6 +44,7 @@ resource "null_resource" "kubeconfig" {
 
   provisioner "local-exec" {
     command = "until $(curl --connect-timeout 3 -k -s --head --fail https://${oci_core_instance.server.public_ip}:6443; if [ \"$?\" == \"22\" ]; then echo true; else echo false; fi); do sleep 5; done; sleep 15; scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null opc@${oci_core_instance.server.public_ip}:/home/opc/.kube/config ~/.kube/k3s"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   depends_on = [
