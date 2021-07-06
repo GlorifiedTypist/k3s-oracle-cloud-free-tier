@@ -3,6 +3,16 @@ resource "kubernetes_namespace" "nginx-ingress" {
   metadata {
     name = "nginx-ingress"
   }
+
+  depends_on = [
+    null_resource.kubeconfig,
+    oci_core_instance.server,
+    oci_core_default_security_list.default,
+    oci_core_internet_gateway.main,
+    oci_core_subnet.public_subnet,
+    oci_core_default_route_table.main,
+    oci_core_vcn.main
+  ]
 }
 
 resource "helm_release" "nginx-ingress" {
@@ -69,6 +79,6 @@ resource "helm_release" "nginx-ingress" {
   }
 
   depends_on = [
-    null_resource.kubeconfig
+    kubernetes_namespace.nginx-ingress
   ]
 }
